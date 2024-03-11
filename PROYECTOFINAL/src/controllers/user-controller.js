@@ -1,4 +1,3 @@
-// Importamos las funciones del servicio de base de datos de usuario y la función de encriptación de contraseñas
 import {
   getUsers,
   createUsers,
@@ -9,7 +8,6 @@ import { encryptPassword } from "../utils/encrypt.js";
 
 export async function getUsersCont(req, res, next) {
   try {
-    // Obtenemos la lista de usuarios con opciones de consulta proporcionadas en req.query
     const users = await getUsers(req.query);
     return res.send(users);
 } catch (error) {
@@ -44,7 +42,6 @@ export async function deleteUserCont(req, res, next) {
       next(error);
   }
 }
-
 export async function updateUserCont(req, res, next) {
   try {
       const { username } = req.params;

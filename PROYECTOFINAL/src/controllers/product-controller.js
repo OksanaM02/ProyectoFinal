@@ -27,11 +27,8 @@ export async function eliminarProductoCont(req, res, next) {
   try {
     const { id } = req.params;
     let { cantidad } = req.body;
-
-    // Convertir la cantidad a un número
     cantidad = parseFloat(cantidad);
 
-    // Verificar si la cantidad es un número válido mayor que cero
     if (isNaN(cantidad) || cantidad <= 0) {
       throw new Error('La cantidad a eliminar debe ser un número válido mayor que cero');
     }

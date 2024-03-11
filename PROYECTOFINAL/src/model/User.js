@@ -8,10 +8,9 @@ const userSchema = new Schema(
         email: { type: String, required: true },
         phoneNumber: { type: Number, unique: true },
         password: { type: String, required: true },
-        profilePicture: { type: String, default: "" }, // Campo para la URL de la imagen de perfil , haber como hago para que se cambien.
+        profilePicture: { type: String, default: "" },
         role: { type: String, default: "user" },
         address: {
-            //campos de direccion para el formulario
             street: { type: String, default: "" },
             city: { type: String, default: "" },
             state: { type: String, default: "" }
@@ -20,7 +19,6 @@ const userSchema = new Schema(
     { timestamps: true }
 );
 
-// Método para comparar contraseñas
 userSchema.methods.comparePassword = function (newPassword) {
     return bcrypt.compare(newPassword, this.password);
 };
