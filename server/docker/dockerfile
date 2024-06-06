@@ -1,0 +1,9 @@
+
+FROM node:21.1.0
+WORKDIR /app/server
+RUN mkdir -p /app/server
+COPY ./server /app/server
+WORKDIR /app
+RUN npm install
+EXPOSE 8080
+CMD ["npm", "start"]
