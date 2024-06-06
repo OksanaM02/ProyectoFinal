@@ -15,3 +15,4 @@ router.patch("/updateItem", verificarToken, actualizarCantidadItem); // Actualiz
 router.delete("/removeItem", verificarToken, eliminarItemDelCarrito); // Eliminar un ítem del carrito
 router.post("/vaciarCarrito", verificarToken, vaciarCarrito); // Vaciar el carrito de compras de un usuario
 export default router;
+
