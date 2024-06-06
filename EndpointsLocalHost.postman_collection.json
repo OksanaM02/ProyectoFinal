@@ -1,0 +1,694 @@
+{
+  "info": {
+    "_postman_id": "344ed43f-53a2-4dfa-941a-1cfd8dca898a",
+    "name": "App OKsana",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "31612848"
+  },
+  "item": [
+    {
+      "name": "usuario",
+      "item": [
+        {
+          "name": "Crear usuario",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"Oksana\",\r\n  \"email\": \"admin@gmail.com\",\r\n  \"phoneNumber\":123,\r\n  \"password\": \"Oksana\",\r\n  \"role\":\"user\",\r\n  \"address\": {\r\n    \"street\": \"Betis\",\r\n    \"city\": \"Sevilla\",\r\n    \"state\": \"Madrid\",\r\n    \"zip\": \"88\"\r\n  }\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/users",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["users"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Hacer login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Capture and store token in environment variable', function () {\r",
+                  "    const responseBody = pm.response.json();\r",
+                  "    const token = responseBody.token;\r",
+                  "\r",
+                  "    postman.setEnvironmentVariable('token', token);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZDUxMWVmODI3ZDUwZDY2MGMzZDEzOCIsInVzZXJuYW1lIjoiQWRtaW4iLCJpYXQiOjE3MDg0NjkzMTgsImV4cCI6MTcwODQ3MjkxOH0.StCxEJ-SkzupirKl_jR8Hfh-Ks4rvPTTWZzyOhyRgyo",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"Oksana\",\r\n  \"password\": \"Oksana\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["login"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get ME",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZTFmNDhkMDhjMjdlMjgxYTFlNmJjMCIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3MDkzMDcxNzcsImV4cCI6MTcwOTMxMDc3N30.IwMB0eO45tcMtOWa1KLBWZswONyM5JhcIP7QvYFZ-h0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/me",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["users", "me"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get usuarios",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZTYxMjI3MzM2YTQ1YmI4MzU0Y2MyMSIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MDk1NzY5NjksImV4cCI6MTcwOTU4MDU2OX0.jwozqA3x4Xbca9j0hjvdOnPmkr1D_ejqRyDKhds8mY8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/users",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["users"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UpdateUser",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZTFmNDhkMDhjMjdlMjgxYTFlNmJjMCIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3MDkzMDcxNzcsImV4cCI6MTcwOTMxMDc3N30.IwMB0eO45tcMtOWa1KLBWZswONyM5JhcIP7QvYFZ-h0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"emi\",\r\n  \"email\": \"usuario@example.com\",\r\n  \"phoneNumber\": 8,\r\n  \"password\": \"KENDALL\",\r\n  \"address\": {\r\n    \"street\": \"turia\",\r\n    \"city\": \"Ciudad real\",\r\n    \"state\": \"urrs\",\r\n    \"zip\": \"12345\"\r\n  }\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/users/Oksana",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["users", "Oksana"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DeleteUSer",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZTFmNDhkMDhjMjdlMjgxYTFlNmJjMCIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3MDkzMDcxNzcsImV4cCI6MTcwOTMxMDc3N30.IwMB0eO45tcMtOWa1KLBWZswONyM5JhcIP7QvYFZ-h0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/users/Oksana",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["users", "Oksana"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Sudadera",
+      "item": [
+        {
+          "name": "CrearPastel",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZTcyZWQ5M2VkNjg1ZWVkYWUyNjlkYyIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTAxNzc4ODMsImV4cCI6MTcxMDE4MTQ4M30._0IaoDkFO1qzM7cxNKWvDFRZDPw28A5KDUPJSmUQGFw",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nombre\": \"Pastel de Chocolate\",\r\n  \"precio\": 15.50,\r\n  \"alergenos\": [\"gluten\", \"nueces\"],\r\n  \"descripcion\": \"Un delicioso pastel de chocolate con capas de ganache y trozos de nuez.\",\r\n  \"foto\": \"url_de_la_imagen_del_pastel.jpg\"\r\n}\r\n\r\n\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/pasteles",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["pasteles"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "ObtenerPasteles",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NDBkZDhhYmM1NDFkM2U2ZTUwYTY3YiIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTU1MjcwOTIsImV4cCI6MTcxNTUzMDY5Mn0.APc1c4LYZ_1VED6JXEfKa362JyDoKWxrA4NRaDz08p0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/sudadera?page=1\n0",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["sudadera"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1\n0"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "BuscarPasteñ",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/sudadera/search",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["", "sudadera", "search"],
+              "query": [
+                {
+                  "key": "talla",
+                  "value": "L",
+                  "disabled": true
+                },
+                {
+                  "key": "precio",
+                  "value": "1000",
+                  "disabled": true
+                },
+                {
+                  "key": "color",
+                  "value": "rojo",
+                  "disabled": true
+                },
+                {
+                  "key": "stock",
+                  "value": "2",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "ActualizarPastel",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"fotosSecundarias\": [\r\n    \"AOT1.png\",\r\n    \"AOT2.png\",\r\n    \"AOT3.png\",\r\n    \"AOT4.png\",\r\n    \"AOT5.png\",\r\n    \"AOT6.png\",\r\n    \"AOT7.png\",\r\n    \"AOT8.png\",\r\n    \"AOT9.png\"\r\n  ]\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": [""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "EliminarPastel",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZTFmNDhkMDhjMjdlMjgxYTFlNmJjMCIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MDk1ODcyMjIsImV4cCI6MTcwOTU5MDgyMn0.3g17DvE9Gavqe8245k1BReh4qo_vV7750glszNqL7Pc",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/pasteles/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["pasteles", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Carrito",
+      "item": [
+        {
+          "name": "Obtener Carrito de Compras",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZjJkZDJjNWJhZjMyMDI0ZWM3YjVkNiIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTA5NjAzOTMsImV4cCI6MTcxMDk2Mzk5M30.nGF1UFmWgZWsqj0G4EiDBcJ1gqOucPdaPARgek8k_6o",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/carrito/vercarrito",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["carrito", "vercarrito"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Añadir Ítem al Carrito",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NDBkZDhhYmM1NDFkM2U2ZTUwYTY3YiIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTU1MjcwOTIsImV4cCI6MTcxNTUzMDY5Mn0.APc1c4LYZ_1VED6JXEfKa362JyDoKWxrA4NRaDz08p0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pastelId\": \"5e72f2b3ed685eedae269e1\",\n  \"cantidad\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/carrito/addItem",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["carrito", "addItem"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Actualizar Cantidad Ítem",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZTcyZWQ5M2VkNjg1ZWVkYWUyNjlkYyIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MDk2NTE2MTYsImV4cCI6MTcwOTY1NTIxNn0.kFY360DjfuaJViOW9Tz-rTyg6a60XRV1yNSr02uqbPA",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pastelId\": \"5e72f2b3ed685eedae269e1\",\n  \"cantidad\": 3\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/carrito/updateItem",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["carrito", "updateItem"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar Ítem del Carrito",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZTcyZWQ5M2VkNjg1ZWVkYWUyNjlkYyIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MDk2NTU0MTgsImV4cCI6MTcwOTY1OTAxOH0.guqKJeiwNney3SVi4c2JI6Ec_sriO9ZtkfMqZ32d5FU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pastelId\": \"5e72f2b3ed685eedae269e1\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/carrito/removeItem",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["carrito", "removeItem"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Vaciar carrito",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZjJkZDJjNWJhZjMyMDI0ZWM3YjVkNiIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTA5NjAzOTMsImV4cCI6MTcxMDk2Mzk5M30.nGF1UFmWgZWsqj0G4EiDBcJ1gqOucPdaPARgek8k_6o",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/carrito/vaciarCarrito",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["carrito", "vaciarCarrito"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "FinalizadaCompra",
+      "item": [
+        {
+          "name": "Terminar compra",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NDBkZDhhYmM1NDFkM2U2ZTUwYTY3YiIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTU1MjcwOTIsImV4cCI6MTcxNTUzMDY5Mn0.APc1c4LYZ_1VED6JXEfKa362JyDoKWxrA4NRaDz08p0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/compraFinalizada/finalizarCompra",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["compraFinalizada", "finalizarCompra"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener compras usuario",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZjJkZDJjNWJhZjMyMDI0ZWM3YjVkNiIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTExMDY5NzEsImV4cCI6MTcxMTExMDU3MX0.qD8NbS9-S3JK1rDM1BTgS--1JSQ9BIQ4MgaCd_66df8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/compraFinalizada/obtenerComprasPorUsuario",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["compraFinalizada", "obtenerComprasPorUsuario"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener todas las compras",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZjJkZDJjNWJhZjMyMDI0ZWM3YjVkNiIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTExMDY5NzEsImV4cCI6MTcxMTExMDU3MX0.qD8NbS9-S3JK1rDM1BTgS--1JSQ9BIQ4MgaCd_66df8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/compraFinalizada/obtenerTodasLasCompras",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["compraFinalizada", "obtenerTodasLasCompras"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

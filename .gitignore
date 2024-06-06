@@ -1,3 +1,11 @@
+# Ignorar la carpeta node_modules en cualquier nivel de profundidad
 node_modules/
-.env
-!.env.template
+
+# Ignorar archivos ZIP a cualquier nivel de profundidad
+**/*.zip
+
+# Ignorar archivos RAR a cualquier nivel de profundidad
+**/*.rar
+# Ignorar archivos .Env a cualquier nivel de profundidad
+**/*.env
+

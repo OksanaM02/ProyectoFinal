@@ -1,0 +1,46 @@
+root = true
+# Saltos de línea de estilo Unix con un salto de línea al final de cada archivo
+[*]
+end_of_line = lf
+insert_final_newline = true
+# Except for Markdown files, do not insert a final newline
+[*.md]
+insert_final_newline = false
+# Sangrado de 4 espacios para los siguientes tipos de archivos: JavaScript, Java, HTML, CSS, JSX, TypeScript, TSX, Sass
+[*.{js,java,html,css,jsx,ts,tsx,sass}]
+indent_style = space
+indent_size = 4
+
+# Sangrado de 2 espacios para archivos JSON
+[*.json]
+indent_style = space
+indent_size = 2
+
+# Coincide con archivos exactos, ya sea package.json o .travis.yml, y aplica un sangrado de 2 espacios
+[{package.json,.travis.yml}]
+indent_style = space
+indent_size = 2
+
+# Agrega un salto de línea al final de los archivos CSS
+[*.css]
+insert_final_newline = true
+
+# Orden predefinido de las propiedades CSS para mantener la consistencia en el proyecto
+[*.css]
+properties_order = "position, display, ... , color"
+
+# Agrega espacios alrededor de los paréntesis en JavaScript, Java, TypeScript y JSX
+[*.{js,jsx,ts,tsx}]
+space_in_parentheses = true
+
+# Sangrado de 4 espacios para la continuación de línea en JavaScript, Java, HTML, CSS, JSX, TypeScript, TSX y Sass
+[*.{js,java,html,css,jsx,ts,tsx,sass}]
+continuation_indent_size = 4
+
+# Elimina automáticamente los espacios en blanco al final de cada línea
+[*]
+trim_trailing_whitespace = true
+
+# Especifica la codificación de caracteres como UTF-8 para todos los archivos
+[*]
+charset = utf-8
