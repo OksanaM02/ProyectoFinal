@@ -7,5 +7,4 @@ node_modules/
 # Ignorar archivos RAR a cualquier nivel de profundidad
 **/*.rar
 # Ignorar archivos .Env a cualquier nivel de profundidad
-**/*.env
 
