@@ -42,8 +42,17 @@ export async function createUsersController(req, res, next) {
         const body = req.body;
         // Encriptamos la contraseña antes de guardarla en la base de datos
         body.password = await encryptPassword(body.password);
-        // Creamos el nuevo usuario
-        const newUser = await createUser({...req.body, role: 'user'});
+        // Creamos el nuevo usuario con los datos de la dirección incluidos
+        const newUser = await createUser({
+            ...req.body,
+            role: 'user',
+            address: {
+                street: body.street,
+                city: body.city,
+                state: body.state,
+                zip: body.postalCode
+            }
+        });
         return res.status(201).json(newUser);
     } catch (error) {
         // Manejo de errores específicos, como conflictos de duplicación o errores de validación
