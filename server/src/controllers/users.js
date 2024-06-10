@@ -42,9 +42,16 @@ export async function createUsersController(req, res, next) {
         const body = req.body;
         // Encriptamos la contraseña antes de guardarla en la base de datos
         body.password = await encryptPassword(body.password);
+
+        // Verificamos si ya existe un usuario con el mismo nombre de usuario
+        const existingUser = await getUserByName(body.username);
+        if (existingUser) {
+            return res.status(409).json({ message: "El nombre de usuario ya existe" });
+        }
+
         // Creamos el nuevo usuario con los datos de la dirección incluidos
         const newUser = await createUser({
-            ...req.body,
+            ...body,
             role: 'user',
             address: {
                 street: body.street,
@@ -53,15 +60,13 @@ export async function createUsersController(req, res, next) {
                 zip: body.postalCode
             }
         });
+
         return res.status(201).json(newUser);
     } catch (error) {
         // Manejo de errores específicos, como conflictos de duplicación o errores de validación
         if (error.name === 'ValidationError') {
             // Error de validación: campos requeridos faltantes o valores no válidos
             return res.status(400).json({ message: "Error de validación al crear el usuario", error: error.message });
-        } else if (error.code === 11000 && error.keyPattern.username) {
-            // Error de duplicación: nombre de usuario duplicado
-            return res.status(409).json({ message: "El nombre de usuario ya existe" });
         } else {
             // Otros errores
             next(error);
