@@ -37,7 +37,7 @@ const SignUp = () => {
       console.log("Respuesta del servidor:", response.data);
 
       // Redirige a la página de inicio de sesión después de crear la cuenta
-      navigate.push('/login');
+     navigate('/login');
     } catch (error) {
       console.error('Error al crear el usuario:', error);
     }
