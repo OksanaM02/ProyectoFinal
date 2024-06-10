@@ -6,7 +6,7 @@ const userSchema = new Schema(
     {
         username: { type: String, required: true, unique: true },
         email: { type: String, required: true },
-        phoneNumber: { type: Number, unique: true },
+        phoneNumber: { type: Number, unique: false },
         role: { type: String, default: "user" },
         password: { type: String, required: true },
         profilePicture: { type: String, default: "" },

@@ -217,7 +217,7 @@ a {
   height: 300px;
   padding: 1px;
   border-radius: 100%;
-  background: #e77cb1;
+  background: #be82a0;
   animation: bounce 3s ease-out forwards;
   transform: translateY(calc(-50vh - 116px));
 }
