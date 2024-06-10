@@ -38,20 +38,13 @@ export async function getUsersController(req, res, next) {
 // Controlador para crear un nuevo usuario
 export async function createUsersController(req, res, next) {
     try {
-        // Obtenemos el nombre de usuario del cuerpo de la solicitud
-        const { username } = req.body;
-
-        // Consultamos si ya existe un usuario con el mismo nombre de usuario
-        const existingUser = await User.findOne({ username });
-
-        // Si ya existe un usuario con el mismo nombre de usuario, devolvemos un mensaje de error
-        if (existingUser) {
-            return res.status(409).json({ message: 'El nombre de usuario ya está en uso.' });
-        }
-
-        // Si no existe un usuario con el mismo nombre de usuario, procedemos a crear el nuevo usuario
-        const newUser = await createUser({ ...req.body, role: 'user' });
-        return res.status(201).json(newUser);
+        // Obtenemos el cuerpo de la solicitud
+        const body = req.body;
+        // Encriptamos la contraseña antes de guardarla en la base de datos
+        body.password = await encryptPassword(body.password);
+        // Creamos el nuevo usuario
+        const users = await createUser({...req.body, role: 'user'});//aqui solo puedes crear un usuario
+        return res.status(201).send(users);
     } catch (error) {
         // Manejo de errores específicos, como conflictos de duplicación o errores de validación
         if (error.code === 11000) {
