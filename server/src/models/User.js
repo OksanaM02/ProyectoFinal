@@ -1,10 +1,11 @@
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
 
 const { Schema, model } = mongoose;
 
 const userSchema = new Schema(
     {
-        username: { type: String, required: true, unique: true },
+        username: { type: String, required: true, unique: true }, // Asegurar que el nombre de usuario sea único
         email: { type: String, required: true },
         phoneNumber: { type: String, unique: false },
         role: { type: String, default: "user" },
