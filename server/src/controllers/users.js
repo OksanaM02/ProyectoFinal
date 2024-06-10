@@ -43,17 +43,20 @@ export async function createUsersController(req, res, next) {
         // Encriptamos la contraseña antes de guardarla en la base de datos
         body.password = await encryptPassword(body.password);
         // Creamos el nuevo usuario
-        const users = await createUser({...req.body, role: 'user'});//aqui solo puedes crear un usuario
-        return res.status(201).send(users);
+        const newUser = await createUser({...req.body, role: 'user'});
+        return res.status(201).json(newUser);
     } catch (error) {
         // Manejo de errores específicos, como conflictos de duplicación o errores de validación
-        if (error.code === 11000) {
-            error.status = 409; // Código de estado 409 para conflicto
+        if (error.name === 'ValidationError') {
+            // Error de validación: campos requeridos faltantes o valores no válidos
+            return res.status(400).json({ message: "Error de validación al crear el usuario", error: error.message });
+        } else if (error.code === 11000 && error.keyPattern.username) {
+            // Error de duplicación: nombre de usuario duplicado
+            return res.status(409).json({ message: "El nombre de usuario ya existe" });
+        } else {
+            // Otros errores
+            next(error);
         }
-        if (error.message.includes("validation")) {
-            error.status = 400; // Código de estado 400 para solicitud incorrecta
-        }
-        next(error);
     }
 }
 
