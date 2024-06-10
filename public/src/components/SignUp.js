@@ -33,7 +33,7 @@ const SignUp = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('https://proyectofinal-qayw.onrender.com/users', formData);
+      const response = await axios.post('https://proyectofinal-qayw.onrender.com/users/', formData);
       console.log("Respuesta del servidor:", response.data);
 
       // Redirige a la página de inicio de sesión después de crear la cuenta
