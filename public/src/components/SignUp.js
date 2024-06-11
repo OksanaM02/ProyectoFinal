@@ -14,7 +14,7 @@ const SignUp = () => {
     city: '',
     postalCode: ''
   });
-
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate(); // Obtiene el objeto de historial
 
   const toggleAddress = () => {
@@ -37,9 +37,14 @@ const SignUp = () => {
       console.log("Respuesta del servidor:", response.data);
 
       // Redirige a la página de inicio de sesión después de crear la cuenta
-     navigate('/login');
+      navigate('/login');
     } catch (error) {
-      console.error('Error al crear el usuario:', error);
+      if (error.response && error.response.status === 409) {
+        // Si el nombre de usuario ya existe, muestra un mensaje de error
+        setErrorMessage('El nombre de usuario ya existe. Por favor, elija otro.');
+      } else {
+        console.error('Error al crear el usuario:', error);
+      }
     }
   };
 
@@ -81,6 +86,7 @@ const SignUp = () => {
           </div>
 
           <button type="submit" className="enviar-formulario" id="submit">Crear Cuenta</button>
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
         </form>
         <p className="pie-formulario">
           ¿Ya tienes una cuenta? <br /> <a href="/login">Inicia Sesión</a>

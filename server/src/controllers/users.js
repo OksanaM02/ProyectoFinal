@@ -56,8 +56,8 @@ export async function createUsersController(req, res, next) {
             address: {
                 street: body.street,
                 city: body.city,
-                state: body.state,
-                zip: body.postalCode
+                state: body.state, // Asegúrate de que 'state' esté incluido en el formulario si es necesario
+                zip: body.zip // Cambia 'postalCode' por 'zip' para que coincida con el esquema del modelo
             }
         });
 

@@ -1,0 +1,75 @@
+.pasteles-container {
+    padding: 20px;
+  }
+
+  .title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
+  .pasteles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+  }
+
+  .pastel-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+  }
+
+  .pastel-foto {
+    max-width: 100%;
+    border-radius: 8px;
+  }
+
+  .pastel-nombre {
+    font-size: 1.25rem;
+    margin: 8px 0;
+  }
+
+  .pastel-descripcion {
+    font-size: 1rem;
+    color: #555;
+  }
+
+  .pastel-precio {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin: 8px 0;
+  }
+
+  .pastel-alergenos {
+    font-size: 0.875rem;
+    color: #999;
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+
+  .pagination button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 10px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  .pagination button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+
+  .pagination span {
+    font-size: 1rem;
+  }
