@@ -110,24 +110,19 @@ export async function actualizarCantidadItem(req, res) {
 // Eliminar un ítem del carrito
 export async function eliminarItemDelCarrito(req, res) {
     const userId = req.user.id;
-    const { pastelId } = req.params; // Cambiar a req.params para obtener el pastelId desde la URL
+    const { pastelId } = req.body;
 
     try {
-        // Buscar la compra del usuario
         const compra = await Compra.findOne({ user: userId });
 
         if (compra) {
-            // Encontrar el ítem en el carrito por su _id y eliminarlo
-            const itemIndex = compra.items.findIndex(item => item.item.toString() === pastelId);
-            if (itemIndex !== -1) {
-                compra.items.splice(itemIndex, 1);
-                await compra.save();
-                res.status(200).json(compra);
-            } else {
-                res.status(404).json({ message: "Ítem no encontrado en el carrito" });
-            }
+            compra.items = compra.items.filter(
+                (item) => item.item.toString() !== pastelId
+            );
+            await compra.save();
+            res.status(200).json(compra);
         } else {
-            res.status(404).json({ message: "Carrito no encontrado para este usuario" });
+            res.status(404).json({ message: "Carrito no encontrado" });
         }
     } catch (error) {
         Logger.error("Error al eliminar ítem del carrito: ", error);
