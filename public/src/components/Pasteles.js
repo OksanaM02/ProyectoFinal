@@ -12,7 +12,7 @@ const Pasteles = () => {
   const [showLoginMessage, setShowLoginMessage] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [loading, setLoading] = useState(true);
-  const pageSize = 8;
+  //const pageSize = 8;
 
   useEffect(() => {
     fetchPasteles(page);

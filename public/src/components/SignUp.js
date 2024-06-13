@@ -49,7 +49,7 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrorMessages({}); // Reset error messages on form submit
+    setErrorMessages({});
     const errors = validateForm();
     if (Object.keys(errors).length > 0) {
       setErrorMessages(errors);

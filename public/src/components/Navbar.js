@@ -17,7 +17,7 @@ const Navbar = () => {
 
   return (
     <header>
-      <a href="#">
+      <a>
         <img
           src="../logo.png"
           alt="logo"
