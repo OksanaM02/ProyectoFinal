@@ -4,7 +4,7 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 import Home from './components/Home'; // Importa HomePage
 import Pasteles from './components/PaginaPasteles'; // Importa el componente Pasteles
-
+import ServicesTab from './components/Service';
 const App = () => {
     return (
         <Router>
@@ -14,6 +14,7 @@ const App = () => {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/home" element={<Home />} />
             <Route path="/pasteles" element={<Pasteles />}/>
+            <Route path="/services" element={<ServicesTab />}/>
           </Routes>
         </Router>
     );

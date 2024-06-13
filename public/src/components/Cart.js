@@ -7,7 +7,7 @@ const Cart = ({ onClose }) => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [purchaseMessage, setPurchaseMessage] = useState('');
 
   useEffect(() => {
     fetchCartItems();
@@ -107,20 +107,28 @@ const Cart = ({ onClose }) => {
 
       const newQuantity = itemToUpdate.cantidad - 1;
 
-      if (newQuantity < 0) {
-        setError('La cantidad no puede ser menor que 0');
-        return;
-      }
+      if (newQuantity <= 0) {
+        const response = await axios.delete(`https://proyectofinal-qayw.onrender.com/carrito/removeItem`, {
+          ...config,
+          data: { pastelId: itemId }
+        });
 
-      const response = await axios.patch(`https://proyectofinal-qayw.onrender.com/carrito/updateItem`, {
-        pastelId: itemId,
-        cantidad: newQuantity
-      }, config);
-
-      if (response.status === 200) {
-        fetchCartItems();
+        if (response.status === 200) {
+          fetchCartItems();
+        } else {
+          setError('Error al eliminar el ítem del carrito');
+        }
       } else {
-        setError('Error al disminuir cantidad del ítem');
+        const response = await axios.patch(`https://proyectofinal-qayw.onrender.com/carrito/updateItem`, {
+          pastelId: itemId,
+          cantidad: newQuantity
+        }, config);
+
+        if (response.status === 200) {
+          fetchCartItems();
+        } else {
+          setError('Error al disminuir cantidad del ítem');
+        }
       }
     } catch (error) {
       console.error('Error al disminuir cantidad del ítem:', error);
@@ -141,15 +149,12 @@ const Cart = ({ onClose }) => {
         }
       };
 
-      // Hacer la solicitud para finalizar la compra en el backend
       await axios.post('https://proyectofinal-qayw.onrender.com/compraFinalizada/finalizarCompra', {}, config);
 
-      // Limpiar el carrito en el frontend
       setCartItems([]);
       setTotalPrice(0);
+      setPurchaseMessage('¡Compra realizada con éxito! Gracias por tu compra.');
 
-      // Mostrar el mensaje de éxito
-      setShowSuccessPopup(true);
     } catch (error) {
       console.error('Error al finalizar la compra:', error);
       setError('Error al finalizar la compra');
@@ -157,8 +162,8 @@ const Cart = ({ onClose }) => {
   };
 
   const closeModal = () => {
-    onClose(); // Cerrar el carrito desde el componente padre
-    setShowSuccessPopup(false); // Asegurarse de que el mensaje de éxito se cierre al cerrar el carrito
+    onClose();
+    setPurchaseMessage(''); // Limpiar mensaje de compra al cerrar el carrito
   };
 
   if (loading) {
@@ -203,17 +208,13 @@ const Cart = ({ onClose }) => {
           ) : (
             <p>El carrito está vacío</p>
           )}
+          {purchaseMessage && (
+            <div className="purchase-message">
+              <p>{purchaseMessage}</p>
+            </div>
+          )}
         </div>
       </div>
-
-      {showSuccessPopup && (
-        <div className="success-popup">
-          <div className="success-content">
-            <p>Compra realizada con éxito.</p>
-            <button className="close-success-popup" onClick={closeModal}>Cerrar</button>
-          </div>
-        </div>
-      )}
     </>
   );
 };

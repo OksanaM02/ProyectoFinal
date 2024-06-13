@@ -121,21 +121,24 @@
   }
   .success-popup {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    bottom: 20px; /* Alinear con un margen desde abajo */
+    right: 20px; /* Alinear con un margen desde la derecha */
     background-color: #ffffff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     padding: 30px;
     border-radius: 8px;
-    width: 90%;
-    max-width: 400px;
+    width: 300px; /* Ancho del mensaje de éxito */
     text-align: center;
     z-index: 1001;
+    display: none; /* Inicialmente oculto */
   }
 
   .success-content {
     position: relative;
+  }
+
+  .success-popup.show {
+    display: block; /* Mostrar cuando la clase .show está presente */
   }
 
   .close-popup {
@@ -155,24 +158,5 @@
   }
 
   .close-popup:hover {
-    background: #d6679a;
-  }
-
-  .success-content p {
-    font-size: 18px;
-    margin-bottom: 20px;
-  }
-
-  .ticket-button {
-    background: #e77cb1;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-
-  .ticket-button:hover {
     background: #d6679a;
   }

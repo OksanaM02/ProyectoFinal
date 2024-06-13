@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Navbar.css'; // Asegúrate de crear un archivo CSS para los estilos específicos del navbar
 import Cart from './Cart'; // Importa el componente del carrito
+import cestaImage from '../assets/cesta.png'; // Importa la imagen del carrito
 
 const Navbar = () => {
   const [isNavbarOpen, setIsNavbarOpen] = useState(false);
@@ -34,9 +35,9 @@ const Navbar = () => {
 
       <nav className={`navbar ${isNavbarOpen ? 'open' : ''}`}>
         <a href="/pasteles" className="nav-item" style={{ '--i': 0 }}>Productos</a>
-        <a href="#" className="nav-item" style={{ '--i': 3 }}>Nuestros Servicios</a>
+        <a href="/services" className="nav-item" style={{ '--i': 3 }}>Mis Pedidos</a>
         <a href="#" className="nav-item cart-icon" onClick={toggleCart} style={{ '--i': 4 }}>
-          <img src="public\public\cesta.png" alt="Carrito" className="cart-image" />
+          <img src={cestaImage} alt="Carrito" className="cart-image" />
         </a>
         <button className="nav-item logout-button" onClick={handleLogout} style={{ '--i': 5 }}>Salir</button>
       </nav>

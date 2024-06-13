@@ -176,3 +176,12 @@ enlace {
   font-weight: 500;
   text-decoration: none;
 }
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+
+  .user-invalid {
+    border-color: red;
+  }

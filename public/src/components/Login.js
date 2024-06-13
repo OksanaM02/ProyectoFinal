@@ -2,19 +2,21 @@ import React, { useState } from 'react';
 import './Login.css';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom'; // Importa useNavigate
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [username, setUserName] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const url = 'https://proyectofinal-qayw.onrender.com/login';
-  const navigate = useNavigate(); // Usa el hook useNavigate
+  const navigate = useNavigate();
 
   const handleLogin = async (event) => {
     event.preventDefault();
+    setError(''); // Limpiar error antes de intentar el inicio de sesión
 
     try {
-      const response = await axios.post(url, { username: username, password });
+      const response = await axios.post(url, { username, password });
       console.log("Respuesta del servidor:", response.data);
 
       const { token, userRole } = response.data;
@@ -28,15 +30,15 @@ const Login = () => {
       if (userRole === "admin") {
         window.location.reload();
       } else {
-        navigate('/home'); // Redirige a la HomePage para usuarios normales
+        navigate('/home');
       }
 
       toast.success('Inicio de sesión exitoso');
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        toast.error('Usuario o contraseña incorrectos');
+        setError('Usuario o contraseña incorrectos');
       } else {
-        toast.error('Error fatal al iniciar sesión');
+        setError('Error fatal al iniciar sesión');
       }
       console.error(error);
     }
@@ -61,12 +63,13 @@ const Login = () => {
           <div className="password-field">
             <input
               type="password"
-              className="form-control"
+              className={`form-control ${error ? 'user-invalid' : ''}`}
               minLength="4"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+            {error && <p className="error-message">{error}</p>}
           </div>
           <button type="submit" className="form__submit" id="submit">Log In</button>
         </form>

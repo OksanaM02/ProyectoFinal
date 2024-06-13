@@ -1,0 +1,9 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%; /* Ocupa todo el ancho del contenedor padre */
+    padding: 20px; /* Espacio alrededor del contenido */
+    background-color: #f7f7f7; /* Color de fondo */
+    min-height: 100vh; /* Altura mínima de la página completa */
+  }
