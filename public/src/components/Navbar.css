@@ -15,40 +15,44 @@ header {
 }
 
 .logo {
-  width: 40px;
+  width: 60px; /* Ajustamos el tamaño del logo */
+  height: auto;
+  margin-top: 20px; /* Ajusta este valor según tu preferencia */
 }
 
 .nav-item {
-    position: relative;
-    color: #e77cb1; /* Cambia esto al color que desees */
-    font-size: 1rem;
-    font-weight: 500;
-    line-height: 25px;
-    letter-spacing: -0.13px;
-    text-decoration: none;
-    margin-left: 2.5rem;
-    transition: all 0.5s ease;
-  }
+  position: relative;
+  color: #e77cb1; /* Cambia esto al color que desees */
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 25px;
+  letter-spacing: -0.13px;
+  text-decoration: none;
+  margin-left: 2.5rem;
+  transition: all 0.5s ease;
+  display: flex; /* Añadimos display flex */
+  align-items: center; /* Añadimos alineación vertical */
+}
 
-  .nav-item:hover {
-    color: #ffffff; /* Cambia esto al color que desees para el hover */
-  }
+.nav-item:hover {
+  color: #cfc2c2; /* Cambia esto al color que desees para el hover */
+}
 
-  .nav-item::after {
-    content: "";
-    position: absolute;
-    bottom: -0.3rem;
-    left: 50%;
-    width: 0;
-    height: 0.15rem;
-    transform: translateX(-50%);
-    background-color: #e9a5c7; /* Cambia esto al color que desees */
-    transition: all 0.5s ease;
-  }
+.nav-item::after {
+  content: "";
+  position: absolute;
+  bottom: -0.3rem;
+  left: 50%;
+  width: 0;
+  height: 0.15rem;
+  transform: translateX(-50%);
+  background-color: #e9a5c7; /* Cambia esto al color que desees */
+  transition: all 0.5s ease;
+}
 
-  .nav-item:hover::after {
-    width: 100%;
-  }
+.nav-item:hover::after {
+  width: 100%;
+}
 
 .icons {
   position: absolute;
@@ -108,4 +112,26 @@ header {
     opacity: 1;
     transition-delay: calc(0.15s * var(--i));
   }
+}
+
+/* Estilos específicos para el botón de salir */
+.logout-button {
+  background-color: transparent;
+  color: #e77cb1;
+  padding: 5px 10px;
+  border: 1px solid #e77cb1;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.7s;
+}
+
+.logout-button:hover {
+  background-color: #e77cb1;
+  color: white;
+}
+
+/* Estilos específicos para la imagen del carrito */
+.cart-image {
+  width: 24px;
+  height: 24px;
 }

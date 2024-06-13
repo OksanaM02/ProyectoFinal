@@ -118,3 +118,35 @@ export async function obtenerComprasPorUsuario(req, res) {
         });
     }
 }
+export async function obtenerUltimaCompra(req, res) {
+    const userId = req.user.id;
+
+    try {
+      // Buscar la última compra finalizada del usuario, ordenada por fecha y hora
+      const ultimaCompra = await CompraFinalizada.findOne({ user: userId })
+        .sort({ fechaHora: -1 }) // Ordenar por fechaHora en orden descendente para obtener la última compra
+        .populate({
+          path: "items.item",
+          select: "nombre precio foto",
+        });
+
+      if (!ultimaCompra) {
+        return res.status(404).json({ message: "No se encontró ninguna compra realizada." });
+      }
+
+      // Calcular el precio total de la última compra si es necesario
+      let precioTotal = 0;
+      for (const item of ultimaCompra.items) {
+        precioTotal += item.cantidad * item.item.precio;
+      }
+      ultimaCompra.precioTotal = precioTotal;
+
+      res.status(200).json(ultimaCompra);
+    } catch (error) {
+      console.error(`Error al obtener la última compra del usuario ${userId}: `, error);
+      res.status(500).json({
+        message: "Error al obtener la última compra del usuario",
+        error: error.message,
+      });
+    }
+  }

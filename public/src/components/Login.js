@@ -71,7 +71,7 @@ const Login = () => {
           <button type="submit" className="form__submit" id="submit">Log In</button>
         </form>
         <p className="form__footer">
-          ¿Eres nuevo en Rices Dulces?<br /> <a href="/signup">Crear Cuenta</a>
+          ¿Eres nuevo en Raices Dulces?<br /> <a href="/signup">Crear Cuenta</a>
         </p>
       </section>
       <section className="form__animation">

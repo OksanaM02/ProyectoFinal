@@ -3,6 +3,7 @@ import {
     finalizarCompra,
     obtenerComprasPorUsuario,
     obtenerTodasLasCompras,
+    obtenerUltimaCompra
 } from "../controllers/compraFinalizada.js";
 import { authorize } from "../middlewares/seguridad-middleware.js";
 import { verificarToken } from "../middlewares/middlewareDeAutenticacion.js";
@@ -19,5 +20,11 @@ router.get(
     verificarToken,
     obtenerComprasPorUsuario
 );
+router.get(
+    "/obtenerUltimaCompra",
+    verificarToken,
+    obtenerUltimaCompra
+);
+
 
 export default router;
