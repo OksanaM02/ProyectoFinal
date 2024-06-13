@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import './Navbar.css'; // Asegúrate de crear un archivo CSS para los estilos específicos del navbar
-import Cart from './Cart'; // Importa el componente del carrito
-import cestaImage from '../assets/cesta.png'; // Importa la imagen del carrito
+import './Navbar.css';
+import Cart from './Cart';
+import cestaImage from '../assets/cesta.png';
 
 const Navbar = () => {
   const [isNavbarOpen, setIsNavbarOpen] = useState(false);
@@ -11,9 +11,7 @@ const Navbar = () => {
   const toggleCart = () => setIsCartOpen(!isCartOpen);
 
   const handleLogout = () => {
-    // Eliminar el token del almacenamiento local
     localStorage.removeItem("token");
-    // Redirigir a la página de inicio de sesión
     window.location.href = "/login";
   };
 

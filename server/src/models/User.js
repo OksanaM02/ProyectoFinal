@@ -5,7 +5,7 @@ const { Schema, model } = mongoose;
 
 const userSchema = new Schema(
     {
-        username: { type: String, required: true, unique: true }, // Asegurar que el nombre de usuario sea único
+        username: { type: String, required: true, unique: true },
         email: { type: String, required: true },
         phoneNumber: { type: String, unique: false },
         role: { type: String, default: "user" },
@@ -21,7 +21,6 @@ const userSchema = new Schema(
     { timestamps: true }
 );
 
-// Método para comparar contraseñas
 userSchema.methods.comparePassword = function (newPassword) {
     return bcrypt.compare(newPassword, this.password);
 };

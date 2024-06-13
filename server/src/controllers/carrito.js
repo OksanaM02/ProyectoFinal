@@ -1,14 +1,14 @@
 import mongoose from "mongoose";
 import Compra from "../models/Carrito.js";
-import Pastel from "../models/Producto.js"; // Ahora importamos el modelo de Pastel
+import Pastel from "../models/Producto.js";
 import User from "../models/User.js";
 import Logger from "../utils/logger.js";
 
-// Añadir un pastel al carrito
+
 export async function addItemAlCarrito(req, res) {
     const { pastelId, cantidad } = req.body;
 
-    // Verificar si el pastelId existe
+
     try {
         const pastel = await Pastel.findById(pastelId);
         if (!pastel) {
@@ -48,14 +48,13 @@ export async function addItemAlCarrito(req, res) {
     }
 }
 
-// Obtener el carrito de compras de un usuario
 export async function obtenerCarrito(req, res) {
     const userId = req.user.id;
 
     try {
         const compra = await Compra.findOne({ user: userId }).populate({
             path: "items.item",
-            select: "precio foto nombre", // Asegurarse de incluir aquí todos los campos que necesitas
+            select: "precio foto nombre",
         });
 
         if (!compra) {
@@ -75,7 +74,6 @@ export async function obtenerCarrito(req, res) {
     }
 }
 
-// Actualizar la cantidad de un ítem en el carrito
 export async function actualizarCantidadItem(req, res) {
     const userId = req.user.id;
     const { pastelId, cantidad } = req.body;
@@ -107,7 +105,6 @@ export async function actualizarCantidadItem(req, res) {
     }
 }
 
-// Eliminar un ítem del carrito
 export async function eliminarItemDelCarrito(req, res) {
     const userId = req.user.id;
     const { pastelId } = req.body;
@@ -130,7 +127,6 @@ export async function eliminarItemDelCarrito(req, res) {
     }
 }
 
-// Vaciar el carrito de compras de un usuario
 export async function vaciarCarrito(req, res) {
     const userId = req.user.id;
 

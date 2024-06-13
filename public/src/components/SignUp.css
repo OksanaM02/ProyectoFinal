@@ -19,7 +19,7 @@
 body {
   width: 100vw;
   height: 100vh;
-  overflow: hidden; /* Esto oculta el scroll */
+  overflow: hidden;
   background: #fff;
   padding: 0;
   margin: 0;
@@ -30,7 +30,7 @@ main {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   padding: 24px;
-  overflow: hidden; /* Esto asegura que no haya desbordamiento en la pantalla */
+  overflow: hidden;
 }
 
 sección {
@@ -42,7 +42,7 @@ sección {
 
 .formulario {
   padding-right: 24px;
-  overflow: hidden; /* Esto asegura que el formulario no se desborde */
+  overflow: hidden;
 }
 
 .título-formulario {

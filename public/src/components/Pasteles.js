@@ -11,7 +11,7 @@ const Pasteles = () => {
   const [showAddedToCartMessage, setShowAddedToCartMessage] = useState(false);
   const [showLoginMessage, setShowLoginMessage] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
-  const [loading, setLoading] = useState(true); // Nuevo estado para el loader
+  const [loading, setLoading] = useState(true);
   const pageSize = 8;
 
   useEffect(() => {
@@ -20,15 +20,15 @@ const Pasteles = () => {
 
   const fetchPasteles = async (page) => {
     try {
-      setLoading(true); // Activa el loader al comenzar la carga
+      setLoading(true);
 
       const response = await axios.get(`https://proyectofinal-qayw.onrender.com/pasteles?page=${page}`);
       setPasteles(response.data.data);
       setTotalPages(response.data.totalPages);
-      setLoading(false); // Desactiva el loader al finalizar la carga
+      setLoading(false);
     } catch (error) {
       console.error('Error fetching pasteles:', error);
-      setLoading(false); // Asegúrate de desactivar el loader en caso de error también
+      setLoading(false);
     }
   };
 
@@ -88,7 +88,7 @@ const Pasteles = () => {
       <h2 className="title">Nuestros Pasteles</h2>
 
       {loading ? (
-        <Loader /> // Muestra el Loader mientras se cargan los datos
+        <Loader />
       ) : (
         <div className="pasteles-grid">
           {pasteles.map((pastel) => (

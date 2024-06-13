@@ -5,7 +5,7 @@ import axios from 'axios';
 import './Pedidos.css';
 import jsPDF from 'jspdf';
 import logo from '../assets/logo.png';
-import Loader from './Loader'; // Importa el componente Loader
+import Loader from './Loader';
 
 const Pedidos = () => {
   const [pedidos, setPedidos] = useState([]);
@@ -80,19 +80,17 @@ const Pedidos = () => {
       y += 10;
       y += 10;
 
-      let totalPages = 1; // Inicializamos el contador de páginas
+      let totalPages = 1;
 
       pedido.items.forEach((item, index) => {
         const nombreProducto = item.nombre;
         const cantidad = item.cantidad;
-        const precioTotal = item.precio.toFixed(2); // Formatear el precio total a 2 decimales
-        const precioUnitario = (precioTotal / cantidad).toFixed(2); // Calcular precio unitario y formatearlo a 2 decimales
-
-        // Si el contenido excede la página actual, agregamos una nueva página
+        const precioTotal = item.precio.toFixed(2);
+        const precioUnitario = (precioTotal / cantidad).toFixed(2);
         if (y > 280) {
           doc.addPage();
           totalPages++;
-          y = 20; // Reiniciamos la posición y para la nueva página
+          y = 20;
         }
 
         doc.text(`${nombreProducto} - ${cantidad} unidades`, 20, y);
@@ -103,11 +101,11 @@ const Pedidos = () => {
         y += 10;
       });
 
-      // Agregamos el número de página al pie de cada página
+
       for (let i = 1; i <= totalPages; i++) {
         doc.setPage(i);
         doc.setFontSize(10);
-        doc.text(`Página ${i} de ${totalPages}`, 160, 280); // Ajustamos aquí la posición x
+        doc.text(`Página ${i} de ${totalPages}`, 160, 280);
       }
 
       const fileName = `Ticket_Pedido_${pedido._id}.pdf`;
@@ -125,7 +123,7 @@ const Pedidos = () => {
   };
 
   if (loading) {
-    return <Loader />; // Muestra el Loader mientras se carga
+    return <Loader />;
   }
 
   if (error) {
@@ -149,7 +147,7 @@ const Pedidos = () => {
                   {pedido.items.map((item) => (
                     <div key={item.item._id} className="productoItem">
                       <p>{item.nombre} - {item.cantidad} unidades</p>
-                      <p>Precio: {item.precio.toFixed(2)} €</p> {/* Asegúrate de que el precio se muestre con 2 decimales */}
+                      <p>Precio: {item.precio.toFixed(2)} €</p>
                     </div>
                   ))}
                   <button className="mostrarMasButton" onClick={() => toggleExpand(pedido._id)}>

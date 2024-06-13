@@ -1,8 +1,7 @@
 import mongoose from "mongoose";
 import Logger from "../utils/logger.js";
-import Pastel from "../models/Producto.js"; // Importa el modelo de Pastel
+import Pastel from "../models/Producto.js";
 
-//* Crear un nuevo pastel
 export async function createPastel(req, res, next) {
     try {
         const existingPastel = await Pastel.findOne({
@@ -30,7 +29,6 @@ export async function createPastel(req, res, next) {
     }
 }
 
-//* Actualizar un pastel existente
 export async function updatePastel(req, res, next) {
     try {
         const { id } = req.params;
@@ -51,7 +49,6 @@ export async function updatePastel(req, res, next) {
     }
 }
 
-//* Eliminar un pastel
 export async function deletePastel(req, res, next) {
     try {
         const { id } = req.params;
@@ -68,7 +65,6 @@ export async function deletePastel(req, res, next) {
     }
 }
 
-//* Buscar pasteles basándose en criterios específicos
 export async function searchPasteles(req, res, next) {
     try {
         const searchCriteria = req.query;
@@ -81,7 +77,7 @@ export async function searchPasteles(req, res, next) {
     }
 }
 
-//* Obtener lista paginada de pasteles
+
 export async function getPasteles(req, res, next) {
     try {
         let page = parseInt(req.query.page) || 1;

@@ -1,7 +1,7 @@
 import express from "express";
 import { login } from "../controllers/login.js";
 import userRouter from "./user.js";
-import pastelRouter from "./pastel.js"; // Asegúrate que el nombre del archivo importado sea el correcto
+import pastelRouter from "./pastel.js";
 import comprasRouter from "./carrito.js";
 import compraFinalizadaRouter from "./compraFinalizada.js";
 

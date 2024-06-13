@@ -213,7 +213,7 @@ a {
 }
 
 .error-message {
-    color: #dc2626; /* Rojo para el error */
+    color: #dc2626;
     font-size: 14px;
-    margin-top: 4px; /* Espacio pequeño sobre el mensaje */
+    margin-top: 4px;
   }

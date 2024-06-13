@@ -1,6 +1,6 @@
 import Compra from "../models/Carrito.js";
 import CompraFinalizada from "../models/CompraFinalizada.js";
-import Pastel from "../models/Producto.js"; // Cambiado de Sudadera a Pastel
+import Pastel from "../models/Producto.js";
 import Logger from "../utils/logger.js";
 
 export async function finalizarCompra(req, res) {
@@ -48,8 +48,6 @@ export async function finalizarCompra(req, res) {
         });
 
         await compraFinalizada.save();
-
-        // Opcional: limpiar el carrito después de finalizar la compra
         carrito.items = [];
         await carrito.save();
 
@@ -66,10 +64,6 @@ export async function finalizarCompra(req, res) {
         });
     }
 }
-
-// Los otros métodos de obtener compras por usuario y todas las compras parecen no necesitar cambios específicos más allá de asegurarse que las referencias son correctas.
-
-// Método para obtener todas las compras
 export async function obtenerTodasLasCompras(req, res) {
     try {
         const compras = await CompraFinalizada.find().populate(
@@ -86,17 +80,13 @@ export async function obtenerTodasLasCompras(req, res) {
     }
 }
 export async function obtenerComprasPorUsuario(req, res) {
-    // Asegurarse de obtener correctamente el ID del usuario desde req.user
     const userId = req.user.id;
-
     try {
-        // Buscar todas las compras finalizadas del usuario
         const compras = await CompraFinalizada.find({ user: userId }).populate({
             path: "items.item",
-            select: "nombreUsuario precio foto nombre", // Asegúrate de incluir todos los campos que necesitas
+            select: "nombreUsuario precio foto nombre",
         });
 
-        // Calcular el precio total de cada compra si es necesario
         compras.forEach((compra) => {
             let precioTotal = 0;
             for (const item of compra.items) {
@@ -122,9 +112,8 @@ export async function obtenerUltimaCompra(req, res) {
     const userId = req.user.id;
 
     try {
-      // Buscar la última compra finalizada del usuario, ordenada por fecha y hora
       const ultimaCompra = await CompraFinalizada.findOne({ user: userId })
-        .sort({ fechaHora: -1 }) // Ordenar por fechaHora en orden descendente para obtener la última compra
+        .sort({ fechaHora: -1 })
         .populate({
           path: "items.item",
           select: "nombre precio foto",
@@ -134,7 +123,6 @@ export async function obtenerUltimaCompra(req, res) {
         return res.status(404).json({ message: "No se encontró ninguna compra realizada." });
       }
 
-      // Calcular el precio total de la última compra si es necesario
       let precioTotal = 0;
       for (const item of ultimaCompra.items) {
         precioTotal += item.cantidad * item.item.precio;

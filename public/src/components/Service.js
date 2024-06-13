@@ -1,7 +1,7 @@
 import React from 'react';
 import Navbar from './Navbar';
 import Pedidos from './Pedidos';
-import styles from './Service.module.css'; // Importa estilos locales
+import styles from './Service.module.css';
 
 const Service = () => {
   return (

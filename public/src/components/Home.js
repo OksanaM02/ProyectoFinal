@@ -1,7 +1,7 @@
 import React from 'react';
 import VideoBackground from './Video';
 import Content from './Contenido';
-import Navbar from './Navbar'; // Import the Navbar component
+import Navbar from './Navbar';
 import './Home.css';
 
 const Main = () => {
