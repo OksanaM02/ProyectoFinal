@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './Pasteles.css';
+import Loader from './Loader'; // Importa el componente Loader
 
 const Pasteles = () => {
   const [pasteles, setPasteles] = useState([]);
@@ -8,9 +9,10 @@ const Pasteles = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [selectedPastel, setSelectedPastel] = useState(null);
   const [showAddedToCartMessage, setShowAddedToCartMessage] = useState(false);
-  const [showLoginMessage, setShowLoginMessage] = useState(false); // Nuevo estado para mensaje de inicio de sesión
-  const [showErrorMessage, setShowErrorMessage] = useState(false); // Nuevo estado para mensaje de error
-  const pageSize = 8; // Tamaño de la página definido en tu API
+  const [showLoginMessage, setShowLoginMessage] = useState(false);
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const [loading, setLoading] = useState(true); // Nuevo estado para el loader
+  const pageSize = 8;
 
   useEffect(() => {
     fetchPasteles(page);
@@ -18,11 +20,15 @@ const Pasteles = () => {
 
   const fetchPasteles = async (page) => {
     try {
+      setLoading(true); // Activa el loader al comenzar la carga
+
       const response = await axios.get(`https://proyectofinal-qayw.onrender.com/pasteles?page=${page}`);
       setPasteles(response.data.data);
       setTotalPages(response.data.totalPages);
+      setLoading(false); // Desactiva el loader al finalizar la carga
     } catch (error) {
       console.error('Error fetching pasteles:', error);
+      setLoading(false); // Asegúrate de desactivar el loader en caso de error también
     }
   };
 
@@ -31,7 +37,7 @@ const Pasteles = () => {
       const token = localStorage.getItem("token");
 
       if (!token) {
-        setShowLoginMessage(true); // Mostrar mensaje si el usuario no ha iniciado sesión
+        setShowLoginMessage(true);
         setTimeout(() => setShowLoginMessage(false), 3000);
         return;
       }
@@ -52,7 +58,7 @@ const Pasteles = () => {
       setTimeout(() => setShowAddedToCartMessage(false), 3000);
     } catch (error) {
       console.error('Error adding to cart:', error);
-      setShowErrorMessage(true); // Mostrar mensaje de error si no se puede agregar al carrito
+      setShowErrorMessage(true);
       setTimeout(() => setShowErrorMessage(false), 3000);
     }
   };
@@ -80,21 +86,27 @@ const Pasteles = () => {
   return (
     <div className="pasteles-container">
       <h2 className="title">Nuestros Pasteles</h2>
-      <div className="pasteles-grid">
-        {pasteles.map((pastel) => (
-          <div key={pastel._id} className="pastel-card">
-            <img src={`/images/${pastel.foto}`} alt={pastel.nombre} className="pastel-foto" />
-            <h3 className="pastel-nombre">{pastel.nombre}</h3>
-            <p className="pastel-descripcion">
-              {pastel.descripcion.length > 100 ? `${pastel.descripcion.substring(0, 97)}...` : pastel.descripcion}
-            </p>
-            <button className="more-btn" onClick={() => openModal(pastel)}>Más</button>
-            <p className="pastel-precio">${pastel.precio.toFixed(2)}</p>
-            <p className="pastel-alergenos">Alergenos: {pastel.alergenos.join(', ')}</p>
-            <button className="add-to-cart-btn" onClick={() => handleAddToCart(pastel._id)}>Añadir al carrito</button>
-          </div>
-        ))}
-      </div>
+
+      {loading ? (
+        <Loader /> // Muestra el Loader mientras se cargan los datos
+      ) : (
+        <div className="pasteles-grid">
+          {pasteles.map((pastel) => (
+            <div key={pastel._id} className="pastel-card">
+              <img src={`/images/${pastel.foto}`} alt={pastel.nombre} className="pastel-foto" />
+              <h3 className="pastel-nombre">{pastel.nombre}</h3>
+              <p className="pastel-descripcion">
+                {pastel.descripcion.length > 100 ? `${pastel.descripcion.substring(0, 97)}...` : pastel.descripcion}
+              </p>
+              <button className="more-btn" onClick={() => openModal(pastel)}>Más</button>
+              <p className="pastel-precio">${pastel.precio.toFixed(2)}</p>
+              <p className="pastel-alergenos">Alergenos: {pastel.alergenos.join(', ')}</p>
+              <button className="add-to-cart-btn" onClick={() => handleAddToCart(pastel._id)}>Añadir al carrito</button>
+            </div>
+          ))}
+        </div>
+      )}
+
       <div className="pagination">
         <button onClick={handlePreviousPage} disabled={page <= 1}>
           Anterior

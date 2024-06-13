@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Cart.css';
+import Loader from './Loader'; // Importa el componente Loader
 
 const Cart = ({ onClose }) => {
   const [cartItems, setCartItems] = useState([]);
@@ -15,9 +16,12 @@ const Cart = ({ onClose }) => {
 
   const fetchCartItems = async () => {
     try {
+      setLoading(true); // Activa el loader al comenzar la carga
+
       const token = localStorage.getItem("token");
       if (!token) {
         console.log("Usuario no autenticado");
+        setLoading(false);
         return;
       }
       const config = {
@@ -35,7 +39,7 @@ const Cart = ({ onClose }) => {
         setTotalPrice(0);
       }
 
-      setLoading(false);
+      setLoading(false); // Desactiva el loader al finalizar la carga
     } catch (error) {
       console.error('Error fetching cart items:', error);
       setError('Error fetching cart items');
@@ -167,11 +171,7 @@ const Cart = ({ onClose }) => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
+    return <Loader />; // Muestra el Loader mientras carga
   }
 
   return (

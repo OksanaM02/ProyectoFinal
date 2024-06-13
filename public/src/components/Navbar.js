@@ -42,7 +42,7 @@ const Navbar = () => {
         <button className="nav-item logout-button" onClick={handleLogout} style={{ '--i': 5 }}>Salir</button>
       </nav>
 
-      {isCartOpen && <Cart onClose={toggleCart} />} {/* Muestra el componente del carrito si isCartOpen es true */}
+      {isCartOpen && <Cart onClose={toggleCart} />}
     </header>
   );
 }

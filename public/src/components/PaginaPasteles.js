@@ -4,7 +4,7 @@ import Navbar from './Navbar';
 
 const PaginaPasteles = () => {
   return (
-    <div>
+    <div className="main">
       <Navbar />
       <main className="main-content">
         <Pasteles />
