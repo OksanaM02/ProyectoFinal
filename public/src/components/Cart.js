@@ -8,7 +8,6 @@ const Cart = ({ onClose }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
-  const [lastPurchaseDetails, setLastPurchaseDetails] = useState(null);
 
   useEffect(() => {
     fetchCartItems();
@@ -93,6 +92,7 @@ const Cart = ({ onClose }) => {
         console.log("Usuario no autenticado");
         return;
       }
+
       const config = {
         headers: {
           Authorization: `Bearer ${token}`
@@ -105,21 +105,28 @@ const Cart = ({ onClose }) => {
         return;
       }
 
-      const newQuantity = itemToUpdate.cantidad - 1;
-      if (newQuantity < 0) {
-        setError('La cantidad no puede ser menor que 0');
-        return;
-      }
+      let newQuantity = itemToUpdate.cantidad - 1;
 
-      const response = await axios.patch(`https://proyectofinal-qayw.onrender.com/carrito/updateItem`, {
-        pastelId: itemId,
-        cantidad: newQuantity
-      }, config);
-
-      if (response.status === 200) {
-        fetchCartItems();
+      // Validar si la nueva cantidad es menor que 1 para eliminar el ítem del carrito
+      if (newQuantity < 1) {
+        const response = await axios.delete(`https://proyectofinal-qayw.onrender.com/carrito/removeItem/${itemId}`, config);
+        if (response.status === 200) {
+          fetchCartItems(); // Actualizar el carrito después de la eliminación
+        } else {
+          setError('Error al eliminar el ítem del carrito');
+        }
       } else {
-        setError('Error al disminuir cantidad del ítem');
+        // Actualizar la cantidad del ítem
+        const response = await axios.patch(`https://proyectofinal-qayw.onrender.com/carrito/updateItem`, {
+          pastelId: itemId,
+          cantidad: newQuantity
+        }, config);
+
+        if (response.status === 200) {
+          fetchCartItems(); // Actualizar el carrito después de la actualización
+        } else {
+          setError('Error al disminuir cantidad del ítem');
+        }
       }
     } catch (error) {
       console.error('Error al disminuir cantidad del ítem:', error);
@@ -143,58 +150,15 @@ const Cart = ({ onClose }) => {
       // Hacer la solicitud para finalizar la compra en el backend
       await axios.post('https://proyectofinal-qayw.onrender.com/compraFinalizada/finalizarCompra', {}, config);
 
-      // Obtener los detalles de la última compra para generar el ticket
-      const lastPurchaseResponse = await axios.get('https://proyectofinal-qayw.onrender.com/compraFinalizada/obtenerComprasPorUsuario', config);
-
-      if (lastPurchaseResponse.data) {
-        setLastPurchaseDetails(lastPurchaseResponse.data);
-      }
-
       // Limpiar el carrito en el frontend
       setCartItems([]);
       setTotalPrice(0);
 
-      // Mostrar el mensaje de éxito y permitir descargar el ticket
+      // Mostrar el mensaje de éxito
       setShowSuccessPopup(true);
     } catch (error) {
       console.error('Error al finalizar la compra:', error);
       setError('Error al finalizar la compra');
-    }
-  };
-
-  const handleGenerateTicket = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        console.log("Usuario no autenticado");
-        return;
-      }
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      };
-
-      if (!lastPurchaseDetails) {
-        setError('No hay detalles de compra disponibles');
-        return;
-      }
-
-      // Crear un blob con los datos de la compra para descargarlo como archivo JSON
-      const blob = new Blob([JSON.stringify(lastPurchaseDetails)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', 'ticket_compra.json');
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-
-      // Cerrar el mensaje de éxito después de obtener el ticket automáticamente
-      setShowSuccessPopup(false);
-    } catch (error) {
-      console.error('Error al generar el ticket de compra:', error);
-      setError('Error al generar el ticket de compra');
     }
   };
 
@@ -217,7 +181,7 @@ const Cart = ({ onClose }) => {
         <div className="cart-content">
           <button className="close-cart" onClick={closeModal}>Cerrar</button>
           <h2>Carrito de Compras</h2>
-          {cartItems.length > 0 && (
+          {cartItems.length > 0 ? (
             <div className="cart-items-container">
               {cartItems.map(item => (
                 <div key={item._id} className="cart-item-container">
@@ -242,6 +206,8 @@ const Cart = ({ onClose }) => {
               <h3>Total: {totalPrice} €</h3>
               <button className="checkout-button" onClick={handleCheckout}>Finalizar Compra</button>
             </div>
+          ) : (
+            <p>El carrito está vacío</p>
           )}
         </div>
       </div>
@@ -250,7 +216,7 @@ const Cart = ({ onClose }) => {
         <div className="success-popup">
           <div className="success-content">
             <p>Compra realizada con éxito.</p>
-            <button className="ticket-button" onClick={handleGenerateTicket}>Obtener Ticket</button>
+            <button className="close-success-popup" onClick={closeModal}>Cerrar</button>
           </div>
         </div>
       )}
