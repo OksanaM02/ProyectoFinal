@@ -105,28 +105,22 @@ const Cart = ({ onClose }) => {
         return;
       }
 
-      let newQuantity = itemToUpdate.cantidad - 1;
+      const newQuantity = itemToUpdate.cantidad - 1;
 
-      // Validar si la nueva cantidad es menor que 1 para eliminar el ítem del carrito
-      if (newQuantity < 1) {
-        const response = await axios.delete(`https://proyectofinal-qayw.onrender.com/carrito/removeItem/${itemId}`, config);
-        if (response.status === 200) {
-          fetchCartItems(); // Actualizar el carrito después de la eliminación
-        } else {
-          setError('Error al eliminar el ítem del carrito');
-        }
+      if (newQuantity < 0) {
+        setError('La cantidad no puede ser menor que 0');
+        return;
+      }
+
+      const response = await axios.patch(`https://proyectofinal-qayw.onrender.com/carrito/updateItem`, {
+        pastelId: itemId,
+        cantidad: newQuantity
+      }, config);
+
+      if (response.status === 200) {
+        fetchCartItems();
       } else {
-        // Actualizar la cantidad del ítem
-        const response = await axios.patch(`https://proyectofinal-qayw.onrender.com/carrito/updateItem`, {
-          pastelId: itemId,
-          cantidad: newQuantity
-        }, config);
-
-        if (response.status === 200) {
-          fetchCartItems(); // Actualizar el carrito después de la actualización
-        } else {
-          setError('Error al disminuir cantidad del ítem');
-        }
+        setError('Error al disminuir cantidad del ítem');
       }
     } catch (error) {
       console.error('Error al disminuir cantidad del ítem:', error);
