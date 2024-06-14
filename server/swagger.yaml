@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: API de Compras y Usuarios
+  title: API RAICES DULCES
   description: API para la gestión de usuarios, productos, carrito de compras y compras finalizadas
   version: 1.0.0
 
