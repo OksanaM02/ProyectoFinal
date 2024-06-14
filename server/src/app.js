@@ -5,7 +5,6 @@ import YAML from 'yamljs';
 import { fileURLToPath } from 'url'; // Importa la función fileURLToPath
 
 const app = express();
-const port = 3000;
 
 // Obtiene la ruta absoluta al archivo swagger.yaml usando import.meta.url
 const __filename = fileURLToPath(import.meta.url);
@@ -22,7 +21,7 @@ app.get('/', (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Servidor listo en http://localhost:${port}`);
-    console.log(`Documentación Swagger disponible en http://localhost:${port}/api-docs`);
+    console.log(`Servidor listo en http://localhost:${process.env.PORT}`);
+    console.log(`Documentación Swagger disponible en http://localhost:${process.env.PORT}/api-docs`);
 });
 export default app;

@@ -178,10 +178,10 @@ const Cart = ({ onClose }) => {
 
   const handleLogoutOrLogin = () => {
     if (isAuthenticated) {
-      localStorage.removeItem("token");
-      setIsAuthenticated(false);
+      // Si el usuario está autenticado y hace clic en Salir del carrito, simplemente cierra el modal
       closeModal();
     } else {
+      // Si el usuario no está autenticado, redirige a la página de login
       window.location.href = "/login"; // Asume que tienes una ruta de login
     }
   };
