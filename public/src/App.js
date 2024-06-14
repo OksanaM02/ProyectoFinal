@@ -6,6 +6,7 @@ import Home from './components/Home'; // Importa HomePage
 import Pasteles from './components/PaginaPasteles'; // Importa el componente Pasteles
 import ServicesTab from './components/Service';
 const App = () => {
+    document.title = 'Raices Dulces';
     return (
         <Router>
           <Routes>
