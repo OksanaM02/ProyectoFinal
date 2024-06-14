@@ -1,5 +1,3 @@
-// Pedidos.jsx
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './Pedidos.css';
@@ -101,7 +99,6 @@ const Pedidos = () => {
         y += 10;
       });
 
-
       for (let i = 1; i <= totalPages; i++) {
         doc.setPage(i);
         doc.setFontSize(10);
@@ -127,14 +124,14 @@ const Pedidos = () => {
   }
 
   if (error) {
-    return <div>{error}</div>;
+    return <div className="mensaje">{error}</div>;
   }
 
   return (
     <div className="pedidosContainer">
       <h2>Mis Pedidos</h2>
       {pedidos.length === 0 ? (
-        <p>No tienes pedidos realizados.</p>
+        <p className="mensaje">No tienes pedidos realizados.</p>
       ) : (
         pedidos.map((pedido) => (
           <div key={pedido._id} className="pedidoItem">

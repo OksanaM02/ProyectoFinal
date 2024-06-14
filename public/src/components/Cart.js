@@ -9,15 +9,21 @@ const Cart = ({ onClose }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [purchaseMessage, setPurchaseMessage] = useState('');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    fetchCartItems();
+    const token = localStorage.getItem("token");
+    setIsAuthenticated(!!token);
+    if (token) {
+      fetchCartItems();
+    } else {
+      setLoading(false);
+    }
   }, []);
 
   const fetchCartItems = async () => {
     try {
       setLoading(true);
-
       const token = localStorage.getItem("token");
       if (!token) {
         console.log("Usuario no autenticado");
@@ -170,6 +176,16 @@ const Cart = ({ onClose }) => {
     setPurchaseMessage('');
   };
 
+  const handleLogoutOrLogin = () => {
+    if (isAuthenticated) {
+      localStorage.removeItem("token");
+      setIsAuthenticated(false);
+      closeModal();
+    } else {
+      window.location.href = "/login"; // Asume que tienes una ruta de login
+    }
+  };
+
   if (loading) {
     return <Loader />;
   }
@@ -178,7 +194,9 @@ const Cart = ({ onClose }) => {
     <>
       <div className="cart-modal">
         <div className="cart-content">
-          <button className="close-cart" onClick={closeModal}>Cerrar</button>
+          <button className="close-cart" onClick={handleLogoutOrLogin}>
+            {isAuthenticated ? 'Salir' : 'Login'}
+          </button>
           <h2>Carrito de Compras</h2>
           {cartItems.length > 0 ? (
             <div className="cart-items-container">
@@ -211,6 +229,11 @@ const Cart = ({ onClose }) => {
           {purchaseMessage && (
             <div className="purchase-message">
               <p>{purchaseMessage}</p>
+            </div>
+          )}
+          {error && (
+            <div className="error-message">
+              <p>{error}</p>
             </div>
           )}
         </div>
