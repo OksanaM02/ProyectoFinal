@@ -1,20 +1,20 @@
-import express from "express";
-import path from "path";
-import { fileURLToPath } from "url";
-import { init } from "./loaders/index.js";
-import config from "./config.js";
+import express from 'express';
+import path from 'path';
+import swaggerUi from 'swagger-ui-express';
+import YAML from 'yamljs';
 
 const app = express();
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const port = 3000;
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-init(app, config);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(YAML.load('../swagger.yaml')));
 
-app.get("/", (req, res) => {
-    res.json({ message: "API Funciona??" });
+app.get('/', (req, res) => {
+    res.json({ message: 'API Funciona??' });
 });
 
-export default app;
+
+app.listen(port, () => {
+    console.log(`Servidor listo en http://localhost:${port}`);
+});

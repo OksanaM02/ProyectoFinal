@@ -1,0 +1,325 @@
+openapi: 3.0.0
+info:
+  title: API de Compras y Usuarios
+  description: API para la gestión de usuarios, productos, carrito de compras y compras finalizadas
+  version: 1.0.0
+
+paths:
+  /login:
+    post:
+      summary: Iniciar sesión
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Login exitoso
+
+  /users/me:
+    get:
+      summary: Obtener información del usuario actual
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Información del usuario obtenida exitosamente
+
+  /users:
+    get:
+      summary: Obtener lista de usuarios
+      security:
+        - BearerAuth: []
+        - JWTAuth: []
+      responses:
+        '200':
+          description: Lista de usuarios obtenida exitosamente
+
+    post:
+      summary: Crear usuario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                email:
+                  type: string
+                phoneNumber:
+                  type: integer
+                password:
+                  type: string
+                role:
+                  type: string
+                address:
+                  type: object
+                  properties:
+                    street:
+                      type: string
+                    city:
+                      type: string
+                    state:
+                      type: string
+                    zip:
+                      type: string
+      responses:
+        '200':
+          description: Usuario creado exitosamente
+
+  /users/{username}:
+    patch:
+      summary: Actualizar información de usuario
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: username
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                email:
+                  type: string
+                phoneNumber:
+                  type: integer
+                password:
+                  type: string
+                address:
+                  type: object
+                  properties:
+                    street:
+                      type: string
+                    city:
+                      type: string
+                    state:
+                      type: string
+                    zip:
+                      type: string
+      responses:
+        '200':
+          description: Información de usuario actualizada exitosamente
+
+    delete:
+      summary: Eliminar usuario
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: username
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Usuario eliminado exitosamente
+
+  /pasteles:
+    get:
+      summary: Obtener lista de pasteles
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Lista de pasteles obtenida exitosamente
+
+    post:
+      summary: Crear pastel
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                precio:
+                  type: number
+                alergenos:
+                  type: array
+                  items:
+                    type: string
+                descripcion:
+                  type: string
+                foto:
+                  type: string
+      responses:
+        '200':
+          description: Pastel creado exitosamente
+
+  /pasteles/{id}:
+    patch:
+      summary: Actualizar pastel
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                precio:
+                  type: number
+                alergenos:
+                  type: array
+                  items:
+                    type: string
+                descripcion:
+                  type: string
+                foto:
+                  type: string
+      responses:
+        '200':
+          description: Pastel actualizado exitosamente
+
+    delete:
+      summary: Eliminar pastel
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Pastel eliminado exitosamente
+
+  /carrito/vercarrito:
+    get:
+      summary: Obtener carrito de compras
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Carrito de compras obtenido exitosamente
+
+  /carrito/addItem:
+    post:
+      summary: Añadir ítem al carrito
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pastelId:
+                  type: string
+                cantidad:
+                  type: integer
+      responses:
+        '200':
+          description: Ítem añadido al carrito exitosamente
+
+  /carrito/updateItem:
+    patch:
+      summary: Actualizar cantidad de ítem en el carrito
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pastelId:
+                  type: string
+                cantidad:
+                  type: integer
+      responses:
+        '200':
+          description: Cantidad de ítem en el carrito actualizada exitosamente
+
+  /carrito/removeItem:
+    delete:
+      summary: Eliminar ítem del carrito
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pastelId:
+                  type: string
+      responses:
+        '200':
+          description: Ítem eliminado del carrito exitosamente
+
+  /carrito/vaciarCarrito:
+    post:
+      summary: Vaciar carrito de compras
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Carrito de compras vaciado exitosamente
+
+  /compraFinalizada/finalizarCompra:
+    post:
+      summary: Finalizar compra
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Compra finalizada exitosamente
+
+  /compraFinalizada/obtenerComprasPorUsuario:
+    get:
+      summary: Obtener compras realizadas por el usuario
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Compras del usuario obtenidas exitosamente
+
+  /compraFinalizada/obtenerTodasLasCompras:
+    get:
+      summary: Obtener todas las compras realizadas
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Todas las compras obtenidas exitosamente
+
+securitySchemes:
+  BearerAuth:
+    type: http
+    scheme: bearer
+    bearerFormat: JWT
